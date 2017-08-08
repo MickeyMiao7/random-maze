@@ -27,6 +27,7 @@ class UnionSet{
             return x;
         }
         return this.set[x] = this.findSet(this.set[x]);
+        
     }
 
     sameSet(x, y){
@@ -104,9 +105,51 @@ class Maze{
         if(this.linkedMap[a].indexOf(b) < 0)
             this.linkedMap[a].push(b);
     }
+
+    draw(){
+        var cellWidth = this.canvas.width / this.col,
+            cellHeight = this.canvas.height / this.row;
+        
+        var ctx = this.canvas.getContext("2d");
+        // Avoid fuzzy 
+        ctx.translate(0.5, 0.5);
+        for(let i = 0; i < this.cells; i++){
+            let row = i / this.col >> 0,
+                col = i % this.row;
+            // Right
+            if((!this.linkedMap[i] || this.linkedMap[i].indexOf(i + 1) < 0)){
+                ctx.moveTo((col + 1) * cellWidth >> 0, row * cellHeight >> 0);
+                ctx.lineTo((col + 1) * cellWidth >> 0, (row + 1) * cellHeight >> 0);
+            }
+            // Down
+            if((!this.linkedMap[i] || this.linkedMap[i].indexOf(i + this.col) < 0)){
+                ctx.moveTo(col * cellWidth >> 0, (row + 1) * cellHeight >> 0);
+                ctx.lineTo((col + 1) * cellWidth >> 0, (row + 1) * cellHeight >> 0);
+            }            
+
+        }
+        this.drawBorders(ctx, cellWidth, cellHeight);
+    }
+
+    drawBorders(ctx, cellWidth, cellHeight){
+        // Left
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, this.canvas.height);
+
+        // Right
+        ctx.moveTo(this.canvas.width - 1, 0);
+        ctx.lineTo(this.canvas.width - 1, this.canvas.height - (cellHeight >> 0))    ;
+        
+        // Up
+        ctx.moveTo(cellWidth >> 0, 0);
+        ctx.lineTo(this.canvas.width, 0);
+        
+        // Down
+        ctx.moveTo(0, this.canvas.height -1 );
+        ctx.lineTo(this.canvas.width, this.canvas.height -1);
+        
+        ctx.stroke();
+    }
+
 }
 
-var maze = new Maze(3, 3);
-maze.generate();
-console.log(maze.unionSet)
-console.log(maze.linkedMap)
