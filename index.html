@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="maze.js"></script>
+    <script>
+        function drawCanvas(){
+            var canvas = document.getElementById("maze");
+            var ctx = canvas.getContext("2d");
+            ctx.moveTo(0, 0);
+            ctx.lineTo(800, 450);
+            ctx.stroke();
+        }
+    </script>
+</head>
+
+<body onload="drawCanvas()">
+    <canvas id="maze" width="800" height="450">
+    </canvas>
+
+</body>
+</html>
+
+
