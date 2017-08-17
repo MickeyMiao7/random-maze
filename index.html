@@ -4,11 +4,10 @@
     <script src="maze.js"></script>
     <script>
         function drawMaze(){
-            var maze = new Maze(20, 20, document.getElementById("maze"));
+            var maze = new Maze(50, 50, document.getElementById("maze"));
             maze.generate();
             maze.draw();
             console.log(maze.unionSet)
-            console.log(maze.linkedMap)
         }
     </script>
 </head>
